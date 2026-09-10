@@ -1,6 +1,6 @@
 name: "build-release-windows"
 on:
-  push:
+  # push:
   release:
     types: [published]
   pull_request:

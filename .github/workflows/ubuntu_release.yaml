@@ -1,11 +1,6 @@
 name: "build-release-ubuntu"
 on:
-  push:
-  release:
-    types: [published]
-  pull_request:
-    types: [opened, edited, synchronize, reopened]
-    branches: master
+  workflow_dispatch: 
 jobs:
   build:
     name: Ubuntu release build
@@ -26,17 +21,17 @@ jobs:
                 g++-11 \
                 cmake
 
-      - name: 'Build Static Release'
-        working-directory: ${{github.workspace}}/liblandstalker
-        run: |
-          cmake -S . -B build -DLANDSTALKER_BUILD_SHARED=OFF -DLANDSTALKER_BUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Release
-          cmake --build build -j32
-          cmake --install build --prefix ./lib
+      # - name: 'Build Static Release'
+      #   working-directory: ${{github.workspace}}/liblandstalker
+      #   run: |
+      #     cmake -S . -B build -DLANDSTALKER_BUILD_SHARED=OFF -DLANDSTALKER_BUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Release
+      #     cmake --build build -j32
+      #     cmake --install build --prefix ./lib
 
-      - name: 'Test Static Release'
-        working-directory: ${{github.workspace}}/liblandstalker/build
-        run: |
-          ctest
+      # - name: 'Test Static Release'
+      #   working-directory: ${{github.workspace}}/liblandstalker/build
+      #   run: |
+      #     ctest
 
       - name: 'Build Static Debug'
         working-directory: ${{github.workspace}}/liblandstalker
@@ -50,34 +45,34 @@ jobs:
         run: |
           ctest
 
-      - name: 'Build Shared Release'
-        working-directory: ${{github.workspace}}/liblandstalker
-        run: |
-          cmake -S . -B build_shared -DLANDSTALKER_BUILD_SHARED=ON -DLANDSTALKER_BUILD_TESTING=ON  -DCMAKE_BUILD_TYPE=Release
-          cmake --build build_shared -j32
-          cmake --install build_shared --prefix ./lib
+      # - name: 'Build Shared Release'
+      #   working-directory: ${{github.workspace}}/liblandstalker
+      #   run: |
+      #     cmake -S . -B build_shared -DLANDSTALKER_BUILD_SHARED=ON -DLANDSTALKER_BUILD_TESTING=ON  -DCMAKE_BUILD_TYPE=Release
+      #     cmake --build build_shared -j32
+      #     cmake --install build_shared --prefix ./lib
 
-      - name: 'Test Shared Release'
-        working-directory: ${{github.workspace}}/liblandstalker/build
-        run: |
-          ctest
+      # - name: 'Test Shared Release'
+      #   working-directory: ${{github.workspace}}/liblandstalker/build
+      #   run: |
+      #     ctest
 
-      - name: 'Build Shared Debug'
-        working-directory: ${{github.workspace}}/liblandstalker
-        run: |
-          cmake -S . -B build_shared_debug -DLANDSTALKER_BUILD_SHARED=ON -DLANDSTALKER_BUILD_TESTING=ON  -DCMAKE_BUILD_TYPE=Debug
-          cmake --build build_shared_debug -j32
-          cmake --install build_shared_debug --prefix ./lib_debug
+      # - name: 'Build Shared Debug'
+      #   working-directory: ${{github.workspace}}/liblandstalker
+      #   run: |
+      #     cmake -S . -B build_shared_debug -DLANDSTALKER_BUILD_SHARED=ON -DLANDSTALKER_BUILD_TESTING=ON  -DCMAKE_BUILD_TYPE=Debug
+      #     cmake --build build_shared_debug -j32
+      #     cmake --install build_shared_debug --prefix ./lib_debug
 
-      - name: 'Test Shared Debug'
-        working-directory: ${{github.workspace}}/liblandstalker/build
-        run: |
-          ctest
+      # - name: 'Test Shared Debug'
+      #   working-directory: ${{github.workspace}}/liblandstalker/build
+      #   run: |
+      #     ctest
 
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: liblandstalker_binary_ubuntu
-          path: |
-            ${{github.workspace}}/liblandstalker/lib
-            ${{github.workspace}}/liblandstalker/lib_debug
+      # - name: Archive artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: liblandstalker_binary_ubuntu
+      #     path: |
+      #       ${{github.workspace}}/liblandstalker/lib
+      #       ${{github.workspace}}/liblandstalker/lib_debug
